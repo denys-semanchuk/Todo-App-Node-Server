@@ -1,8 +1,17 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import { IUser } from "../types/authTypes";
 
-const generateToken = (userId: string): string => {
-  const secret = process.env.JWT_SECRET || 'your-secret-key';
-  return jwt.sign({ userId }, secret, { expiresIn: '1h' });
+const generateToken = (user: IUser): string => {
+  const secret = process.env.JWT_SECRET || "your-secret-key";
+  delete user.password;
+  return jwt.sign(
+    {
+      id: user._id,
+      email: user.email,
+      username: user.username,
+    },
+    secret
+  );
 };
 
 export default generateToken;
