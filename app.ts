@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import connectDB from "./config/db";
 import authRoutes from "./routes/authRoutes";
+import taskRoutes from './routes/taskRoutes';
 import dotenv from "dotenv";
 import cors from "cors";
 dotenv.config();
@@ -16,7 +17,7 @@ app.use(
 connectDB();
 
 app.use("/api/auth", authRoutes);
-
+app.use('/api/tasks', taskRoutes);
 app.use((err: Error, req: Request, res: Response) => {
   console.error(err.stack);
   res.status(500).json({
