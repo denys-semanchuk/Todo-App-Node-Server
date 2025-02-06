@@ -23,4 +23,5 @@ export interface ErrorResponse {
 
 export interface AuthenticatedRequest extends Request {
   user?: IUser;
+  params: { id: string };
 }
