@@ -1,14 +1,13 @@
-import { Response } from "express";
-import { AuthenticatedRequest } from "../types/authTypes";
-import Task, { Priority } from "../models/Task";
+import { Request, Response } from "express";
+import Task from "../models/Task";
+import { IUser } from "../types/authTypes";
 
-interface CreateTaskRequest {
-  text: string;
-  priority: Priority;
+export interface IGetUserAuthInfoRequest extends Request {
+  user: IUser // or any other type
 }
 
 export const getTasks = async (
-  req: AuthenticatedRequest,
+  req: IGetUserAuthInfoRequest,
   res: Response
 ): Promise<void> => {
   try {
@@ -22,7 +21,7 @@ export const getTasks = async (
 };
 
 export const createTask = async (
-  req: AuthenticatedRequest & { body: CreateTaskRequest },
+  req: IGetUserAuthInfoRequest,
   res: Response
 ): Promise<void> => {
   try {
@@ -41,7 +40,7 @@ export const createTask = async (
   }
 };
 
-export const deleteTask = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const deleteTask = async (req: IGetUserAuthInfoRequest, res: Response): Promise<void> => {
   try {
     const task = await Task.findOneAndDelete({ 
       _id: req.params.id,
@@ -57,7 +56,7 @@ export const deleteTask = async (req: AuthenticatedRequest, res: Response): Prom
   }
 };
 
-export const updateTask = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const updateTask = async (req: IGetUserAuthInfoRequest, res: Response): Promise<void> => {
   try {
     const task = await Task.findOneAndUpdate(
       { _id: req.params.id, user: req.user?._id },
@@ -74,7 +73,7 @@ export const updateTask = async (req: AuthenticatedRequest, res: Response): Prom
   }
 };
 
-export const toggleImportant = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+export const toggleImportant = async (req: IGetUserAuthInfoRequest, res: Response): Promise<void> => {
   try {
     const task = await Task.findOne({ _id: req.params.id, user: req.user?._id });
     if (!task) {
