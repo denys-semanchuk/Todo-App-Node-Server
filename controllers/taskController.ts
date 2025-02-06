@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { AuthenticatedRequest } from "../types/authTypes";
 import Task, { Priority } from "../models/Task";
 
@@ -54,5 +54,22 @@ export const deleteTask = async (req: AuthenticatedRequest, res: Response): Prom
     res.json({ message: 'Task deleted' });
   } catch (err) {
     res.status(500).json({ message: err instanceof Error ? err.message : 'Error deleting task' });
+  }
+};
+
+export const updateTask = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const task = await Task.findOneAndUpdate(
+      { _id: req.params.id, user: req.user?._id },
+      { $set: req.body },
+      { new: true }
+    );
+    if (!task) {
+      res.status(404).json({ message: 'Task not found' });
+      return;
+    }
+    res.json(task);
+  } catch (err) {
+    res.status(500).json({ message: err instanceof Error ? err.message : 'Error updating task' });
   }
 };
