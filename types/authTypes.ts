@@ -20,3 +20,7 @@ export interface AuthResponse {
 export interface ErrorResponse {
   message: string;
 }
+
+export interface AuthenticatedRequest extends Request {
+  user?: IUser;
+}
