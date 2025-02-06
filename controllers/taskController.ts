@@ -87,3 +87,18 @@ export const toggleImportant = async (req: IGetUserAuthInfoRequest, res: Respons
     res.status(500).json({ message: err instanceof Error ? err.message : 'Error toggling important' });
   }
 };
+
+export const toggleCompleted = async (req: IGetUserAuthInfoRequest, res: Response): Promise<void> => {
+  try {
+    const task = await Task.findOne({ _id: req.params.id, user: req.user?._id });
+    if (!task) {
+      res.status(404).json({ message: 'Task not found' });
+      return;
+    }
+    task.completed = !task.completed;
+    await task.save();
+    res.json(task);
+  } catch (err) {
+    res.status(500).json({ message: err instanceof Error ? err.message : 'Error toggling completed' });
+  }
+};
