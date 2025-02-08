@@ -4,7 +4,7 @@ import {
   getTasks,
   createTask,
   deleteTask,
-  updateTask,
+  updateTaskText,
   toggleImportant,
   toggleCompleted,
 } from "../controllers/taskController";
@@ -16,7 +16,7 @@ router.use(protect);
 router.get("/", protect, getTasks);
 router.post("/", protect, createTask);
 router.delete("/:id", protect, deleteTask);
-router.put("/:id", protect, updateTask);
+router.put("/:id", protect, updateTaskText);
 router.patch("/:id/important", protect, toggleImportant);
 router.patch("/:id/completed", protect, toggleCompleted);
 

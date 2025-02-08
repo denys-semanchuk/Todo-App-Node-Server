@@ -56,13 +56,16 @@ export const deleteTask = async (req: IGetUserAuthInfoRequest, res: Response): P
   }
 };
 
-export const updateTask = async (req: IGetUserAuthInfoRequest, res: Response): Promise<void> => {
+export const updateTaskText = async (req: IGetUserAuthInfoRequest, res: Response): Promise<void> => {
   try {
     const task = await Task.findOneAndUpdate(
       { _id: req.params.id, user: req.user?._id },
-      { $set: req.body },
+      { $set: {
+        text: req.body.text
+      } },
       { new: true }
     );
+    console.log(req.body.text);
     if (!task) {
       res.status(404).json({ message: 'Task not found' });
       return;
