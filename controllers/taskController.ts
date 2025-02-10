@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Task from "../models/Task";
+import Task, { Priority } from "../models/Task";
 import { IUser } from "../types/authTypes";
 
 export interface IGetUserAuthInfoRequest extends Request {
@@ -103,5 +103,34 @@ export const toggleCompleted = async (req: IGetUserAuthInfoRequest, res: Respons
     res.json(task);
   } catch (err) {
     res.status(500).json({ message: err instanceof Error ? err.message : 'Error toggling completed' });
+  }
+};
+
+export const togglePriority = async (req: IGetUserAuthInfoRequest, res: Response): Promise<void> => {
+  try {
+    const task = await Task.findOne({ _id: req.params.id, user: req.user?._id });
+    if (!task) {
+      res.status(404).json({ message: 'Task not found' });
+      return;
+    }
+
+    switch (task.priority) {
+      case Priority.LOW:
+        task.priority = Priority.MEDIUM;
+        break;
+      case Priority.MEDIUM:
+        task.priority = Priority.HIGH;
+        break;
+      case Priority.HIGH:
+        task.priority = Priority.LOW;
+        break;
+      default:
+        task.priority = Priority.MEDIUM;
+    }
+
+    await task.save();
+    res.json(task);
+  } catch (err) {
+    res.status(500).json({ message: err instanceof Error ? err.message : 'Error toggling priority' });
   }
 };

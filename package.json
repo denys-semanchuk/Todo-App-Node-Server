@@ -6,7 +6,8 @@
     "start": "nodemon app.ts",
     "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "chmod +x ./node_modules/.bin/tsc"
   },
   "type": "module",
   "keywords": [],

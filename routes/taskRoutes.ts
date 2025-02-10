@@ -7,6 +7,7 @@ import {
   updateTaskText,
   toggleImportant,
   toggleCompleted,
+  togglePriority,
 } from "../controllers/taskController";
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.delete("/:id", protect, deleteTask);
 router.put("/:id", protect, updateTaskText);
 router.patch("/:id/important", protect, toggleImportant);
 router.patch("/:id/completed", protect, toggleCompleted);
+router.patch("/:id/priority", protect, togglePriority);
 
 export default router;
