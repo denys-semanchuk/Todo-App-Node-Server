@@ -9,4 +9,4 @@ COPY . .
 
 RUN npm run build
 
-CMD [ "node", "dist/app.js" ]
+CMD [ "node", "--experimental-specifier-resolution=node", "dist/app.js" ]
