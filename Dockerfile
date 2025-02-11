@@ -10,4 +10,4 @@ COPY tsconfig.json ./
 
 RUN npm run build
 
-CMD [ "node", "dist/app.js" ]  # Adjust entry point if needed
+CMD [ "node", "dist/app.js" ]  
