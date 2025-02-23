@@ -8,6 +8,7 @@ import {
   toggleImportant,
   toggleCompleted,
   togglePriority,
+  deleteCompletedTasks,
 } from "../controllers/taskController";
 
 const router = express.Router();
@@ -17,6 +18,7 @@ router.use(protect);
 router.get("/", protect, getTasks);
 router.post("/", protect, createTask);
 router.delete("/:id", protect, deleteTask);
+router.delete('/completed', protect, deleteCompletedTasks);
 router.put("/:id", protect, updateTaskText);
 router.patch("/:id/important", protect, toggleImportant);
 router.patch("/:id/completed", protect, toggleCompleted);

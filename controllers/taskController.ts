@@ -3,7 +3,7 @@ import Task, { Priority } from "../models/Task";
 import { IUser } from "../types/authTypes";
 
 export interface IGetUserAuthInfoRequest extends Request {
-  user: IUser // or any other type
+  user: IUser
 }
 
 export const getTasks = async (
@@ -53,6 +53,31 @@ export const deleteTask = async (req: IGetUserAuthInfoRequest, res: Response): P
     res.json({ message: 'Task deleted' });
   } catch (err) {
     res.status(500).json({ message: err instanceof Error ? err.message : 'Error deleting task' });
+  }
+};
+
+export const deleteCompletedTasks = async (
+  req: IGetUserAuthInfoRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const result = await Task.deleteMany({ 
+      user: req.user?._id,
+      completed: true 
+    });
+
+    if (result.deletedCount === 0) {
+      res.status(404).json({ message: 'No completed tasks found' });
+      return;
+    }
+
+    res.json({ 
+      message: `Successfully deleted ${result.deletedCount} completed tasks`
+    });
+  } catch (err) {
+    res.status(500).json({ 
+      message: err instanceof Error ? err.message : 'Error deleting completed tasks' 
+    });
   }
 };
 
