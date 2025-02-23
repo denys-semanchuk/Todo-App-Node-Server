@@ -17,8 +17,8 @@ router.use(protect);
 
 router.get("/", protect, getTasks);
 router.post("/", protect, createTask);
+router.delete('/completed-tasks', protect, deleteCompletedTasks);
 router.delete("/:id", protect, deleteTask);
-router.delete('/completed', protect, deleteCompletedTasks);
 router.put("/:id", protect, updateTaskText);
 router.patch("/:id/important", protect, toggleImportant);
 router.patch("/:id/completed", protect, toggleCompleted);

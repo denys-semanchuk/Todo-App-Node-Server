@@ -61,18 +61,28 @@ export const deleteCompletedTasks = async (
   res: Response
 ): Promise<void> => {
   try {
+    // First get the IDs of tasks that will be deleted
+    const tasksToDelete = await Task.find({ 
+      user: req.user?._id,
+      completed: true 
+    }).select('_id');
+
+    if (tasksToDelete.length === 0) {
+      res.status(404).json({ message: 'No completed tasks found' });
+      return;
+    }
+
+    const deletedIds = tasksToDelete.map(task => task._id);
+
+    // Then delete the tasks
     const result = await Task.deleteMany({ 
       user: req.user?._id,
       completed: true 
     });
 
-    if (result.deletedCount === 0) {
-      res.status(404).json({ message: 'No completed tasks found' });
-      return;
-    }
-
     res.json({ 
-      message: `Successfully deleted ${result.deletedCount} completed tasks`
+      message: `Successfully deleted ${result.deletedCount} completed tasks`,
+      deletedIds: deletedIds
     });
   } catch (err) {
     res.status(500).json({ 
