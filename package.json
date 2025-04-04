@@ -4,13 +4,15 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
-    "build": "tsc",
+    "postinstall": "tsc",
     "heroku-postbuild": "npm install && npm run build",
-    "postinstall": "npm run build"
+    "deploy": "git add . && git commit -m Heroku && git push heroku master",
+    "watch-ts": "tsc -w",
+    "watch-node": "nodemon dist/index.js"
   },
   "engines": {
-    "node": "18.x",
-    "npm": "9.x"
+    "node": "22.14.0",
+    "npm": "10.9.2"
   },
   "dependencies": {
     "@types/node": "20.17.28",
