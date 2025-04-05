@@ -4,11 +4,9 @@
   "main": "dist/app.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "npm run build && node dist/app.js",
     "dev": "nodemon src/app.ts",
-    "build": "tsc",
-    "heroku-postbuild": "npm run build",
-    "lint": "eslint . --ext .ts"
+    "build": "tsc"
   },
   "engines": {
     "node": "22.14.0",
