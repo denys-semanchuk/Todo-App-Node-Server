@@ -13,6 +13,15 @@
   "ts-node": {
     "swc": true
   },
-  "include": ["**/*.ts"],
+  "include": [
+    "app.ts",
+    "config/**/*.ts",
+    "controllers/**/*.ts",
+    "middleware/**/*.ts",
+    "models/**/*.ts",
+    "routes/**/*.ts",
+    "types/**/*.ts",
+    "utils/**/*.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }
