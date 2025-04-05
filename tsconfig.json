@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "module": "ES2022",            // Changed from commonjs
+    "module": "ES2022",
     "esModuleInterop": true,
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
     "types": ["node"],
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "./",
   },
   "lib": ["es2015"],
   "ts-node": {
