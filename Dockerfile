@@ -21,4 +21,4 @@ COPY --from=builder /app/dist ./dist
 RUN npm install --only=production
 
 # Запускаем приложение
-CMD ["node", "dist/index.js"]  # или другой entry-point
+CMD ["node", "dist/app.js"]  # или другой entry-point
